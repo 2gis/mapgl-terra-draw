@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapGL terra draw</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #controls {
+            z-index: 1;
+            position: absolute;
+            top: 0; 
+            left: 0;
+            margin: 16px;
+        }
+
+
+        #controls {
+            display: flex;
+            background: #ffffff;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        #controls .item {
+            all: revert;
+            padding: 0;
+            border: none;
+            background: #ffffff;
+            color: #262626;
+            cursor: pointer;
+            border-bottom: 1px solid #e6e6e6;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        #controls .item:focus {
+            outline: 0;
+        }
+        #controls .item:first-child {
+            border-bottom: none;
+        }
+        #controls .item:hover {
+            color: rgba(38, 38, 38, 0.7);
+        }
+        #controls .active {
+            color: #028eff;
+        }
+        #controls .item:disabled {
+            background: #f2f2f2;
+            color: #929292;
+            fill: #929292;
+            cursor: default;
+        }
+
+        #controls .item {
+            padding: 8px;
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-wrap: break-word;
+
+            position: relative;
+            height: 100%;
+        }
+
+    </style>
+    <script type="module" src="./app.ts"></script>
+</head>
+<body>
+    <div id="controls">
+        <div class="item" id="select">Select</div>
+		<div class="item" id="point">Point</div>
+		<div class="item" id="linestring">LineString</div>
+		<div class="item" id="polygon">Polygon</div>
+		<div class="item" id="freehand">Freehand</div>
+		<div class="item" id="circle">Circle</div>
+		<div class="item" id="rectangle">Rectangle</div>
+		<div class="item" id="angled-rectangle">Angled Rectangle</div>
+		<div class="item" id="sector">Sector</div>
+		<div class="item" id="sensor">Sensor</div>
+		<div class="item" id="clear">Clear</div>
+    </div>
+    <div id="map"></div>
+</body>
+</html>
