@@ -1,20 +1,29 @@
 {
-  "name": "mapgl-terra-draw",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@2gis/mapgl-terra-draw",
+  "description": "TerraDraw adapter for MapGL JS API",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/mapgl-terra-draw.cjs",
+  "module": "dist/mapgl-terra-draw.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist", "LICENSE"
+  ],
   "scripts": {
     "start": "vite demo",
     "build": "npm run build:lib && npm run build:types",
-    "build:lib": "tsc",
+    "build:lib": "vite -c vite.config.lib.js build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "build:demo": "vite build demo",
     "prettier": "prettier --check \"./**/*..{ts,html,css,md}\"",
     "prettier:write": "prettier --write \"./**/*.{ts,html,css,md}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "TerraDraw adapter for MapGL JS API",
+  "keywords": [
+    "mapgl",
+    "terradraw"
+  ],
+  "author": "Michel Beloshitsky <itano@yandex.ru>",
+  "license": "MIT",
   "devDependencies": {
     "@types/geojson": "^7946.0.16",
     "prettier": "^3.6.0",
@@ -22,10 +31,9 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "geojson": "^0.5.0"
-  },
-  "peerDependencies": {
     "@2gis/mapgl": "^1.61.0",
-    "terra-draw": "^1.8.0"
+    "terra-draw": "^1.8.0",
+    "geojson": "^0.5.0",
+    "vanilla-colorful": "^0.7.2"
   }
 }
