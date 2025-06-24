@@ -159,7 +159,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 	 * @param styling An object mapping draw modes to feature styling functions
 	 */
 	public render(changes: TerraDrawChanges, _styling: TerraDrawStylingFunction) {
-		console.log(changes);
 		for (const f of changes.created) {
 			this.updateFeature(f);
 		}

@@ -1,5 +1,6 @@
 {
   "name": "mapgl-terra-draw",
+  "description": "TerraDraw adapter for MapGL JS API",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -11,10 +12,9 @@
     "prettier": "prettier --check \"./**/*..{ts,html,css,md}\"",
     "prettier:write": "prettier --write \"./**/*.{ts,html,css,md}\""
   },
-  "keywords": [],
+  "keywords": ["mapgl", "terradraw"],
   "author": "",
   "license": "ISC",
-  "description": "TerraDraw adapter for MapGL JS API",
   "devDependencies": {
     "@types/geojson": "^7946.0.16",
     "prettier": "^3.6.0",
