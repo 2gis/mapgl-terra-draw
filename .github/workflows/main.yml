@@ -1,6 +1,9 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
+env:
+  VITE_MAPGL_KEY: a1893935-6834-4445-b97a-3405fb426c5b
+
 on:
   # Runs on pushes targeting the default branch
   push:
