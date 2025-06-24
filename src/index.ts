@@ -11,15 +11,19 @@ import {
 
 import type * as mapgl from "@2gis/mapgl/types";
 
+const baseColor = "#3388ff";
+
+const dotIcon = (color:string, fillColor:string) => 'data:image/svg+xml;base64,' + btoa(`<svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.5 6C4.88071 6 6 4.88071 6 3.5C6 2.11929 4.88071 1 3.5 1C2.11929 1 1 2.11929 1 3.5C1 4.88071 2.11929 6 3.5 6Z" fill="${fillColor}" stroke="${color}" stroke-width="1.2"/>
+</svg>`);
+
 export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter {
-	// private _initialDragPan: boolean;
-	// private _initialDragRotate: boolean;
 	private _map: mapgl.Map;
 	private _mapgl: typeof mapgl;
 	private _container: HTMLElement;
 	private _dynamicObjects: Record<
 		string,
-		mapgl.Polygon | mapgl.Polyline | mapgl.Circle
+		mapgl.Polygon | mapgl.Polyline | mapgl.Marker
 	>;
 
 	constructor(
@@ -34,10 +38,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 		this._map = config.map;
 		this._container = this._map.getContainer();
 		this._dynamicObjects = {};
-
-		// We want to respect the initial map settings
-		// this._initialDragRotate = this._map.dragRotate.isEnabled();
-		// this._initialDragPan = this._map.dragPan.isEnabled();
 	}
 
 	/**
@@ -65,7 +65,13 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 	 * Enables or disables the draggable functionality of the map.
 	 * @param enabled Set to true to enable map dragging, or false to disable it.
 	 */
-	public setDraggability(_enabled: boolean) {
+	public setDraggability(enabled: boolean) {
+		const mapImpl = (this._map as any)._impl;
+		if (enabled) {
+			mapImpl.modules.handler.unblock();
+		} else {
+			mapImpl.modules.handler.block();
+		}
 	}
 
 	/**
@@ -144,9 +150,11 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 				if (current) {
 					current.destroy();
 				}
-				this._dynamicObjects[id] = new this._mapgl.Circle(this._map, {
+				this._dynamicObjects[id] = new this._mapgl.Marker(this._map, {
 					coordinates: feature.geometry.coordinates,
-					radius: 300,
+					icon: dotIcon(baseColor, feature.properties.midPoint ? "#ffffff" : baseColor),
+					size: [16, 16],
+					anchor: [8, 8],
 				});
 				break;
 			}
