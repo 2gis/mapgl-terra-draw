@@ -23,8 +23,5 @@ load().then((mapgl) => {
                 controls: ["select", "point", "linestring", "polygon", "freehand", "circle", "angled-rectangle", "download", "clear"],
             }
         });
-
-        // Store cleanup function for potential future use
-        (window as any).terraDrawCleanup = cleanup;
     });
 });
