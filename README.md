@@ -2,15 +2,17 @@
 
 [TerraDraw](https://github.com/JamesLMilner/terra-draw) adapter for [MapGL JS API](http://docs.2gis.com/en/mapgl).
 
-## Установка
+[Demo](https://2gis.github.io/mapgl-terra-draw/)
+
+## Getting started
+
+Install library
 
 ```bash
 npm install @2gis/mapgl-terra-draw
 ```
 
-## Getting started
-
-Для быстрого создания интерфейса редактирования используйте функцию `createTerraDrawWithUI`:
+and use ui-helper `createTerraDrawWithUI`:
 
 ```ts
 import { load } from '@2gis/mapgl';
@@ -38,7 +40,7 @@ load().then((mapgl) => {
 
 ## Advanced usage
 
-If you want to deeply integrate with terra-draw or create your own UI.
+If you want to deep integrate with terra-draw or create your own UI.
 
 ```ts
 import { load } from '@2gis/mapgl';
