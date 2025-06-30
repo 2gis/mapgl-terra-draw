@@ -20,7 +20,7 @@ load().then((mapgl) => {
             map,
             mapgl,
             config: {
-                controls: ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "download", "clear"],
+                controls: ["select", "point", "linestring", "polygon", "freehand", "circle", "angled-rectangle", "download", "clear"],
             }
         });
 

@@ -100,7 +100,7 @@ function createControlButton(label: string, icon: string, id: string): HTMLEleme
 
 	// Создаем иконку Material Icons
 	const iconElement = document.createElement('span');
-	iconElement.className = 'material-icons';
+	iconElement.className = 'material-symbols-outlined';
 	iconElement.textContent = icon;
 	iconElement.style.cssText = `
 		font-size: 18px;

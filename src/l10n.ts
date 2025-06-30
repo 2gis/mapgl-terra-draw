@@ -1,5 +1,5 @@
 /**
- * Локализация и иконки для UI элементов
+ * Localization
  */
 
 export interface ControlConfig {
@@ -7,13 +7,10 @@ export interface ControlConfig {
 	icon: string;
 }
 
-/**
- * Конфигурация контролов с иконками и лейблами
- */
 export const CONTROL_CONFIGS: Record<string, ControlConfig> = {
 	select: {
 		label: "Select",
-		icon: "near_me", // курсор/выбор
+		icon: "select",
 	},
 	point: {
 		label: "Point",
