@@ -26,17 +26,18 @@
         }
 
 
-        #controls {
+        #controls .group {
             display: flex;
             background: #ffffff;
             overflow: hidden;
             border-radius: 4px;
             box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
+            margin: 16px 0;
         }
 
-        #controls .item {
+        #controls .group .item {
             all: revert;
             padding: 0;
             border: none;
@@ -47,26 +48,26 @@
             box-sizing: border-box;
             flex-shrink: 0;
         }
-        #controls .item:focus {
+        #controls .group .item:focus {
             outline: 0;
         }
-        #controls .item:first-child {
+        #controls .group .item:first-child {
             border-bottom: none;
         }
-        #controls .item:hover {
+        #controls .group .item:hover {
             color: rgba(38, 38, 38, 0.7);
         }
-        #controls .active {
+        #controls .group .active {
             color: #028eff;
         }
-        #controls .item:disabled {
+        #controls .group .item:disabled {
             background: #f2f2f2;
             color: #929292;
             fill: #929292;
             cursor: default;
         }
 
-        #controls .item {
+        #controls .group .item {
             padding: 8px;
             font-size: 13px;
             font-family: Arial, Helvetica, sans-serif;
@@ -81,17 +82,24 @@
 </head>
 <body>
     <div id="controls">
-        <div class="item" id="select">Select</div>
-		<div class="item" id="point">Point</div>
-		<div class="item" id="linestring">LineString</div>
-		<div class="item" id="polygon">Polygon</div>
-		<div class="item" id="freehand">Freehand</div>
-		<div class="item" id="circle">Circle</div>
-		<div class="item" id="rectangle">Rectangle</div>
-		<div class="item" id="angled-rectangle">Angled Rectangle</div>
-		<div class="item" id="sector">Sector</div>
-		<div class="item" id="sensor">Sensor</div>
-		<div class="item" id="clear">Clear</div>
+        <div class="group">
+            <div class="item" id="select">Select</div>
+            <div class="item" id="point">Point</div>
+            <div class="item" id="linestring">LineString</div>
+            <div class="item" id="polygon">Polygon</div>
+            <div class="item" id="freehand">Freehand</div>
+            <div class="item" id="circle">Circle</div>
+            <div class="item" id="rectangle">Rectangle</div>
+            <div class="item" id="angled-rectangle">Angled Rectangle</div>
+            <div class="item" id="sector">Sector</div>
+            <div class="item" id="sensor">Sensor</div>
+        </div>
+        <div class="group">
+            <div class="item" id="download">Download GeoJSON</div>
+        </div>
+        <div class="group">
+            <div class="item" id="clear">Clear</div>
+        </div>
     </div>
     <div id="map"></div>
 </body>

@@ -29,14 +29,35 @@ load().then((mapgl) => {
         draw.start();
 
         addModeChangeHandler(draw, currentSelected);
+		addDownloadHandler(draw);
     });
 });
 
-const currentSelected: { button: undefined | HTMLButtonElement; mode: string } =
-	{
-		button: undefined,
-		mode: "static",
-	};
+function addDownloadHandler(draw: TerraDraw) {
+	const downloadButton = document.getElementById('download') as HTMLButtonElement;
+	downloadButton.addEventListener('click', () => {
+		const fc = {
+			type: 'FeatureCollection',
+			features: draw.getSnapshot()
+		}
+	 	triggerDownload('features.json', JSON.stringify(fc, null, 2));
+	});
+}
+
+function triggerDownload(fn: string, data: string) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(data));
+  element.setAttribute('download', fn);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
+const currentSelected: { button: undefined | HTMLButtonElement; mode: string } = {
+	button: undefined,
+	mode: "static",
+};
 
 const addModeChangeHandler = (
 	draw: TerraDraw,
