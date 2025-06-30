@@ -18,3 +18,10 @@ export {
 
 // Экспорты локализации
 export { CONTROL_CONFIGS, type ControlConfig } from "./l10n";
+
+// Экспорты стилей
+export { 
+	type Style, 
+	defaultStyle, 
+	makeTransparent 
+} from "./styles";

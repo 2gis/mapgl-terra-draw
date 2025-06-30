@@ -8,7 +8,7 @@
   "scripts": {
     "start": "vite demo",
     "build": "npm run build:lib && npm run build:types",
-    "build:lib": "tsc",
+    "build:lib": "vite -c vite.config.lib.js build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "build:demo": "vite build demo",
     "prettier": "prettier --check \"./**/*..{ts,html,css,md}\"",
@@ -29,6 +29,7 @@
   "dependencies": {
     "@2gis/mapgl": "^1.61.0",
     "geojson": "^0.5.0",
-    "terra-draw": "^1.8.0"
+    "terra-draw": "^1.8.0",
+    "vanilla-colorful": "^0.7.2"
   }
 }

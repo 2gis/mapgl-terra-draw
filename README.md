@@ -1,6 +1,8 @@
 # MapGL TerraDraw Adapter
 
-[TerraDraw](https://github.com/JamesLMilner/terra-draw) adapter for [MapGL JS API](http://docs.2gis.com/en/mapgl).
+[TerraDraw](https://github.com/JamesLMilner/terra-draw) adapter for [MapGL JS API](http://docs.2gis.com/en/mapgl) or just a simple drawing tool.
+
+![intro pic](/docs/intro.png)
 
 [Demo](https://2gis.github.io/mapgl-terra-draw/)
 

@@ -20,7 +20,13 @@ load().then((mapgl) => {
             map,
             mapgl,
             config: {
-                controls: ["select", "point", "linestring", "polygon", "freehand", "circle", "angled-rectangle", "download", "clear"],
+                controls: ["select", "point", "linestring", "polygon", "freehand", "circle", "angled-rectangle", "color", "stroke-width", "point-cap", "download", "clear"],
+                style: {
+                    fillColor: '#3388ff33',
+                    outlineColor: '#3388ff',
+                    outlineWidth: 3,
+                    pointCap: 'round',
+                }
             }
         });
     });

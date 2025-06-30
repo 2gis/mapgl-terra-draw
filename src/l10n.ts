@@ -53,7 +53,19 @@ export const CONTROL_CONFIGS: Record<string, ControlConfig> = {
 		icon: "download", // скачивание
 	},
 	clear: {
-		label: "Clear",
-		icon: "clear_all", // очистка
+		label: "Delete All",
+		icon: "delete", 
+	},
+	color: {
+		label: "Color",
+		icon: "palette", // цвет
+	},
+	"stroke-width": {
+		label: "Stroke Width",
+		icon: "line_weight", // толщина линии
+	},
+	"point-cap": {
+		label: "Point Cap",
+		icon: "adjust", // тип точки
 	},
 };

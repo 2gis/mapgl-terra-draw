@@ -7,12 +7,22 @@ import {
 } from "terra-draw";
 
 import type * as mapgl from "@2gis/mapgl/types";
+import { Style, defaultStyle } from "./styles";
 
-const baseColor = "#3388ff";
-
-const dotIcon = (color: string, fillColor: string) => 'data:image/svg+xml;base64,' + btoa(`<svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3.5 6C4.88071 6 6 4.88071 6 3.5C6 2.11929 4.88071 1 3.5 1C2.11929 1 1 2.11929 1 3.5C1 4.88071 2.11929 6 3.5 6Z" fill="${fillColor}" stroke="${color}" stroke-width="1.2"/>
+const dotIcon = (color: string, fillColor: string, cap: 'none' | 'round' | 'square' = 'round') => {
+	let shape = '';
+	if (cap === 'round') {
+		shape = `<circle cx="3.5" cy="3.5" r="2.5" fill="${fillColor}" stroke="${color}" stroke-width="1.2"/>`;
+	} else if (cap === 'square') {
+		shape = `<rect x="1" y="1" width="5" height="5" fill="${fillColor}" stroke="${color}" stroke-width="1.2"/>`;
+	} else {
+		shape = `<circle cx="3.5" cy="3.5" r="1" fill="${color}"/>`;
+	}
+	
+	return 'data:image/svg+xml;base64,' + btoa(`<svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+${shape}
 </svg>`);
+};
 
 export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter {
 	private _map: mapgl.Map;
@@ -22,11 +32,17 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 		string,
 		mapgl.Polygon | mapgl.Polyline | mapgl.Marker
 	>;
+	private _style: Style;
+	private _drawingStyle: Style;
+
+	private featureStyles: Record<string, Style>;
 
 	constructor(
 		config: {
 			map: mapgl.Map;
 			mapgl: typeof mapgl;
+			style?: Style;
+			drawingStyle?: Style;
 		} & TerraDrawExtend.BaseAdapterConfig,
 	) {
 		super(config);
@@ -35,6 +51,9 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 		this._map = config.map;
 		this._container = this._map.getContainer();
 		this._dynamicObjects = {};
+		this._style = { ...defaultStyle, ...config.style };
+		this._drawingStyle = { ...this._style, ...config.drawingStyle };
+		this.featureStyles = {};
 	}
 
 	/**
@@ -112,6 +131,20 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 	 */
 	public setDoubleClickToZoom(_enabled: boolean) {}
 
+	/**
+	 * Updates the current style settings
+	 */
+	public updateStyle(style: Partial<Style>) {
+		this._style = { ...this._style, ...style };
+	}
+
+	/**
+	 * Updates the current drawing style settings
+	 */
+	public updateDrawingStyle(style: Partial<Style>) {
+		this._drawingStyle = { ...this._drawingStyle, ...style };
+	}
+
 	private updateFeature(feature: GeoJSONStoreFeatures) {
 		const id = feature.id;
 		if (!id) {
@@ -119,14 +152,38 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 			return;
 		}
 
+		let stylingFeatureId = id;
+		if (feature.properties.selectionPoint) {
+			stylingFeatureId = String(feature.properties.selectionPointFeatureId);
+		}
+		if (feature.properties.midPoint) {
+			stylingFeatureId = String(feature.properties.midPointFeatureId);
+		}
+
+		if (!this.featureStyles[stylingFeatureId]) {
+			this.featureStyles[stylingFeatureId] = { ...this._style }
+		}
+
+		// Determine which style to use based on feature state
+		const isDrawing = feature.properties.mode !== undefined;
+		const currentStyle = this.featureStyles[stylingFeatureId] ?? (isDrawing ? this._drawingStyle : this._style);
+
 		switch (feature.geometry.type) {
 			case "Polygon": {
 				const current = this._dynamicObjects[id];
 				if (current) {
 					current.destroy();
 				}
+				if (!feature.properties.color) {
+					feature.properties.color = currentStyle.fillColor;
+					feature.properties.outlineColor = currentStyle.outlineColor;
+					feature.properties.outlineWidth = currentStyle.outlineWidth;
+				}
 				this._dynamicObjects[id] = new this._mapgl.Polygon(this._map, {
 					coordinates: feature.geometry.coordinates,
+					color: String(feature.properties.color),
+					strokeColor: String(feature.properties.outlineColor),
+					strokeWidth: Number(feature.properties.outlineWidth),
 				});
 				break;
 			}
@@ -136,8 +193,14 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 				if (current) {
 					current.destroy();
 				}
+				if (!feature.properties.color) {
+					feature.properties.color = currentStyle.outlineColor;
+					feature.properties.width = currentStyle.outlineWidth;
+				}
 				this._dynamicObjects[id] = new this._mapgl.Polyline(this._map, {
 					coordinates: feature.geometry.coordinates,
+					color: String(feature.properties.color),
+					width: Number(feature.properties.width),
 				});
 				break;
 			}
@@ -149,7 +212,11 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 				}
 				this._dynamicObjects[id] = new this._mapgl.Marker(this._map, {
 					coordinates: feature.geometry.coordinates,
-					icon: dotIcon(baseColor, feature.properties.midPoint ? "#ffffff" : baseColor),
+					icon: dotIcon(
+						currentStyle.outlineColor, 
+						feature.properties.midPoint ? "#ffffff" : currentStyle.fillColor,
+						currentStyle.pointCap
+					),
 					size: [16, 16],
 					anchor: [8, 8],
 				});

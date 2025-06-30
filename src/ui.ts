@@ -1,8 +1,12 @@
+import './ui.css';
+import 'vanilla-colorful';
 import { TerraDraw, TerraDrawExtend } from "terra-draw";
 import type * as mapgl from "@2gis/mapgl/types";
 import { TerraDrawMapGlAdapter } from "./adapter";
 import { createDefaultModes } from "./modes";
 import { CONTROL_CONFIGS } from "./l10n";
+import { Style, defaultStyle, makeTransparent } from "./styles";
+
 
 export type UiControl = 
 	| "select" 
@@ -16,10 +20,15 @@ export type UiControl =
 	| "sector" 
 	| "sensor"
 	| "download"
-	| "clear";
+	| "clear"
+	| "color"
+	| "stroke-width"
+	| "point-cap";
 
 export interface UiConfig {
 	controls?: UiControl[];
+	style?: Style;
+	drawingStyle?: Style;
 }
 
 export interface TerraModeUiOptions {
@@ -35,7 +44,7 @@ export interface TerraModeUiOptions {
  */
 function createUiControls(container: HTMLElement, config: UiConfig = {}): HTMLElement {
 	const {
-		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "download", "clear"],
+		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "color", "stroke-width", "point-cap", "download", "clear"],
 	} = config;
 
 	const controlsElement = document.createElement('div');
@@ -43,10 +52,31 @@ function createUiControls(container: HTMLElement, config: UiConfig = {}): HTMLEl
 
 	// Разделяем контролы на группы
 	const drawingControls = controls.filter(control => 
-		["download", "clear"].indexOf(control) === -1
+		["download", "clear", "color", "stroke-width", "point-cap"].indexOf(control) === -1
+	);
+	const styleControls = controls.filter(control => 
+		["color", "stroke-width", "point-cap"].indexOf(control) !== -1
 	);
 	const downloadControls = controls.filter(control => control === "download");
 	const clearControls = controls.filter(control => control === "clear");
+
+	// Style controls group
+	if (styleControls.length > 0) {
+		const styleGroup = createControlGroup('row');
+		styleControls.forEach((control) => {
+			if (control === "color") {
+				const colorControl = createColorControl(config.style ?? defaultStyle);
+				styleGroup.appendChild(colorControl);
+			} else if (control === "stroke-width") {
+				const strokeWidthControl = createStrokeWidthControl();
+				styleGroup.appendChild(strokeWidthControl);
+			} else if (control === "point-cap") {
+				const pointCapControl = createPointCapControl();
+				styleGroup.appendChild(pointCapControl);
+			}
+		});
+		controlsElement.appendChild(styleGroup);
+	}
 
 	// Drawing tools group
 	if (drawingControls.length > 0) {
@@ -86,9 +116,10 @@ function createUiControls(container: HTMLElement, config: UiConfig = {}): HTMLEl
 	return controlsElement;
 }
 
-function createControlGroup(): HTMLElement {
+function createControlGroup(direction: 'row' | 'column' = 'column'): HTMLElement {
 	const group = document.createElement('div');
-	group.className = 'group';
+	group.classList.add('group');
+	group.classList.add(direction);
 	return group;
 }
 
@@ -110,6 +141,156 @@ function createControlButton(label: string, icon: string, id: string): HTMLEleme
 	button.appendChild(iconElement);
 
 	return button;
+}
+
+function createColorControl(style: Style): HTMLElement {
+	const container = document.createElement('div');
+	container.id = 'color';
+	container.className = 'item color-control';
+	container.id = 'color';
+	container.title = 'Color';
+
+	const indicator = document.createElement('span');
+	indicator.className = 'color-indicator';
+	indicator.style.backgroundColor = style.outlineColor;
+
+	indicator.addEventListener('click', () => {
+		const popup = document.createElement('div');
+		popup.classList.add('color-picker');
+
+		const picker = document.createElement('hex-color-picker');
+		picker.setAttribute('color', style.outlineColor);
+		popup.appendChild(picker);
+
+		const buttons = document.createElement('div');
+		buttons.classList.add('color-picker-buttons');
+		popup.appendChild(buttons);
+
+		const closeButton = document.createElement('button');
+		closeButton.textContent = 'Close';
+		buttons.appendChild(closeButton);
+
+		const saveButton = document.createElement('button');
+		saveButton.classList.add('primary');
+		saveButton.textContent = 'Save';
+		buttons.appendChild(saveButton);
+
+		let changedColor: string | undefined;
+		picker.addEventListener('color-changed', (event) => {
+			changedColor = event.detail.value;
+		});
+		closeButton.addEventListener('click', () => {
+			document.body.removeChild(popup);
+		});
+		saveButton.addEventListener('click', () => {
+			if (changedColor) {
+				container.dispatchEvent(new CustomEvent('colorchange', {
+					detail: { color: changedColor }
+				}));
+				indicator.style.backgroundColor = changedColor;
+				picker.setAttribute('color', style.outlineColor);
+			}
+			document.body.removeChild(popup);
+		});
+
+		document.body.appendChild(popup);
+	});
+
+	container.appendChild(indicator);
+
+	return container;
+}
+
+function createStrokeWidthControl(): HTMLElement {
+	const container = document.createElement('div');
+	container.className = 'item stroke-width-control';
+	container.id = 'stroke-width';
+	container.title = 'Stroke Width';
+
+	// Create icon
+	const iconElement = document.createElement('span');
+	iconElement.className = 'material-symbols-outlined';
+	iconElement.textContent = 'line_weight';
+	iconElement.style.cssText = `
+		font-size: 18px;
+		line-height: 1;
+	`;
+
+	// Create input
+	const input = document.createElement('input');
+	input.type = 'range';
+	input.min = '1';
+	input.max = '10';
+	input.value = defaultStyle.outlineWidth.toString();
+	input.style.cssText = `
+		width: 60px;
+		margin-left: 5px;
+	`;
+
+	container.appendChild(iconElement);
+	container.appendChild(input);
+
+	// Handle input changes
+	input.addEventListener('input', () => {
+		container.dispatchEvent(new CustomEvent('strokewidthchange', { 
+			detail: { width: parseInt(input.value) } 
+		}));
+	});
+
+	return container;
+}
+
+function createPointCapControl(): HTMLElement {
+	const container = document.createElement('div');
+	container.className = 'item point-cap-control';
+	container.id = 'point-cap';
+	container.title = 'Point Cap';
+
+	// Create icon
+	const iconElement = document.createElement('span');
+	iconElement.className = 'material-symbols-outlined';
+	iconElement.textContent = 'adjust';
+	iconElement.style.cssText = `
+		font-size: 18px;
+		line-height: 1;
+	`;
+
+	// Create select
+	const select = document.createElement('select');
+	select.style.cssText = `
+		margin-left: 5px;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		padding: 2px;
+	`;
+
+	const options = [
+		{ value: 'round', label: 'Round' },
+		{ value: 'square', label: 'Square' },
+		{ value: 'none', label: 'None' }
+	];
+
+	options.forEach(option => {
+		const optionElement = document.createElement('option');
+		optionElement.value = option.value;
+		optionElement.textContent = option.label;
+		if (option.value === defaultStyle.pointCap) {
+			optionElement.selected = true;
+		}
+		select.appendChild(optionElement);
+	});
+
+	container.appendChild(iconElement);
+	container.appendChild(select);
+
+	// Handle select changes
+	select.addEventListener('change', () => {
+		container.dispatchEvent(new CustomEvent('pointcapchange', { 
+			detail: { cap: select.value } 
+		}));
+	});
+
+	return container;
 }
 
 function triggerDownload(filename: string, data: string) {
@@ -134,14 +315,23 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 		adapterConfig = {}
 	} = options;
 
+	// Merge styles with defaults
+	const currentStyle = { ...defaultStyle, ...config.style };
+	const currentDrawingStyle = { ...currentStyle, ...config.drawingStyle };
+
+	// Create adapter
+	const adapter = new TerraDrawMapGlAdapter({
+		map,
+		mapgl,
+		coordinatePrecision: 9,
+		style: currentStyle,
+		drawingStyle: currentDrawingStyle,
+		...adapterConfig,
+	});
+
 	// Create TerraDraw instance
 	const draw = new TerraDraw({
-		adapter: new TerraDrawMapGlAdapter({
-			map,
-			mapgl,
-			coordinatePrecision: 9,
-			...adapterConfig,
-		}),
+		adapter,
 		modes: createDefaultModes(),
 	});
 
@@ -156,12 +346,12 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 
 	// Add event handlers for mode changes
 	const {
-		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "download", "clear"],
+		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "color", "stroke-width", "point-cap", "download", "clear"],
 	} = config;
 
 	// Разделяем контролы на рисующие и служебные
 	const drawingControls = controls.filter(control => 
-		["download", "clear"].indexOf(control) === -1
+		["download", "clear", "color", "stroke-width", "point-cap"].indexOf(control) === -1
 	);
 
 	drawingControls.forEach((mode) => {
@@ -179,6 +369,48 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 			});
 		}
 	});
+
+	// Add style control handlers
+	if (controls.indexOf("color") !== -1) {
+		const colorControl = document.getElementById('color');
+		if (colorControl) {
+			colorControl.addEventListener('colorchange', (event: any) => {
+				const color = event.detail.color;
+				const transparentColor = makeTransparent(color);
+				
+				adapter.updateStyle({ 
+					outlineColor: color,
+					fillColor: transparentColor 
+				});
+				adapter.updateDrawingStyle({ 
+					outlineColor: color,
+					fillColor: transparentColor 
+				});
+			});
+		}
+	}
+
+	if (controls.indexOf("stroke-width") !== -1) {
+		const strokeWidthControl = document.getElementById('stroke-width');
+		if (strokeWidthControl) {
+			strokeWidthControl.addEventListener('strokewidthchange', (event: any) => {
+				const width = event.detail.width;
+				adapter.updateStyle({ outlineWidth: width });
+				adapter.updateDrawingStyle({ outlineWidth: width });
+			});
+		}
+	}
+
+	if (controls.indexOf("point-cap") !== -1) {
+		const pointCapControl = document.getElementById('point-cap');
+		if (pointCapControl) {
+			pointCapControl.addEventListener('pointcapchange', (event: any) => {
+				const cap = event.detail.cap;
+				adapter.updateStyle({ pointCap: cap });
+				adapter.updateDrawingStyle({ pointCap: cap });
+			});
+		}
+	}
 
 	// Add download handler
 	if (controls.indexOf("download") !== -1) {
@@ -199,6 +431,9 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 		const clearButton = document.getElementById('clear');
 		if (clearButton) {
 			clearButton.addEventListener('click', () => {
+				if (!confirm('Are you sure want to clear all features?')) {
+					return;
+				}
 				draw.clear();
 			});
 		}
