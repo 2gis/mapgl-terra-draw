@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MapGL terra draw</title>
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <style>
         html, body {
             margin: 0;
@@ -17,7 +21,7 @@
             overflow: hidden;
         }
 
-        #controls {
+        .terra-draw-controls {
             z-index: 1;
             position: absolute;
             top: 0; 
@@ -25,8 +29,7 @@
             margin: 16px;
         }
 
-
-        #controls .group {
+        .terra-draw-controls .group {
             display: flex;
             background: #ffffff;
             overflow: hidden;
@@ -37,9 +40,9 @@
             margin: 16px 0;
         }
 
-        #controls .group .item {
+        .terra-draw-controls .group .item {
             all: revert;
-            padding: 0;
+            padding: 8px;
             border: none;
             background: #ffffff;
             color: #262626;
@@ -47,60 +50,46 @@
             border-bottom: 1px solid #e6e6e6;
             box-sizing: border-box;
             flex-shrink: 0;
-        }
-        #controls .group .item:focus {
-            outline: 0;
-        }
-        #controls .group .item:first-child {
-            border-bottom: none;
-        }
-        #controls .group .item:hover {
-            color: rgba(38, 38, 38, 0.7);
-        }
-        #controls .group .active {
-            color: #028eff;
-        }
-        #controls .group .item:disabled {
-            background: #f2f2f2;
-            color: #929292;
-            fill: #929292;
-            cursor: default;
-        }
-
-        #controls .group .item {
-            padding: 8px;
             font-size: 13px;
             font-family: Arial, Helvetica, sans-serif;
             overflow-wrap: break-word;
-
             position: relative;
             height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            min-height: 40px;
+        }
+
+        .terra-draw-controls .group .item:focus {
+            outline: 0;
+        }
+
+        .terra-draw-controls .group .item:first-child {
+            border-bottom: none;
+        }
+
+        .terra-draw-controls .group .item:hover {
+            color: rgba(38, 38, 38, 0.7);
+            background: #f8f8f8;
+        }
+
+        .terra-draw-controls .group .active {
+            color: #028eff;
+            background: #e3f2fd;
+        }
+
+        .terra-draw-controls .group .item:disabled {
+            background: #f2f2f2;
+            color: #929292;
+            cursor: default;
         }
 
     </style>
     <script type="module" src="./app.ts"></script>
 </head>
 <body>
-    <div id="controls">
-        <div class="group">
-            <div class="item" id="select">Select</div>
-            <div class="item" id="point">Point</div>
-            <div class="item" id="linestring">LineString</div>
-            <div class="item" id="polygon">Polygon</div>
-            <div class="item" id="freehand">Freehand</div>
-            <div class="item" id="circle">Circle</div>
-            <div class="item" id="rectangle">Rectangle</div>
-            <div class="item" id="angled-rectangle">Angled Rectangle</div>
-            <div class="item" id="sector">Sector</div>
-            <div class="item" id="sensor">Sensor</div>
-        </div>
-        <div class="group">
-            <div class="item" id="download">Download GeoJSON</div>
-        </div>
-        <div class="group">
-            <div class="item" id="clear">Clear</div>
-        </div>
-    </div>
     <div id="map"></div>
 </body>
 </html>
