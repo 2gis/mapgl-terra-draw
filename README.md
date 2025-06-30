@@ -1,6 +1,6 @@
 # MapGL TerraDraw Adapter
 
-Адаптер для интеграции [terra-draw](https://github.com/JamesLMilner/terra-draw) с картами 2GIS MapGL.
+[TerraDraw](https://github.com/JamesLMilner/terra-draw) adapter for [MapGL JS API](http://docs.2gis.com/en/mapgl).
 
 ## Установка
 
@@ -8,9 +8,37 @@
 npm install @2gis/mapgl-terra-draw
 ```
 
-## Использование
+## Getting started
 
-### Базовое использование адаптера
+Для быстрого создания интерфейса редактирования используйте функцию `createTerraDrawWithUI`:
+
+```ts
+import { load } from '@2gis/mapgl';
+import { createTerraDrawWithUI } from '@2gis/mapgl-terra-draw';
+
+load().then((mapgl) => {
+    const map = new mapgl.Map('map', {
+        center: [55.31878, 25.23584],
+        zoom: 13,
+        key: 'your-api-key',
+        enableTrackResize: true,
+    });
+
+    map.on("styleload", () => {
+        const { draw, cleanup } = createTerraDrawWithUI({
+            map,
+            mapgl,
+            config: {
+                controls: ["select", "point", "polygon", "circle", "download", "clear"],
+            }
+        });
+    });
+});
+```
+
+## Advanced usage
+
+If you want to deeply integrate with terra-draw or create your own UI.
 
 ```ts
 import { load } from '@2gis/mapgl';
@@ -43,68 +71,15 @@ load().then((mapgl) => {
 });
 ```
 
-### Быстрый старт с UI
+### CSS and Material Icons
 
-Для быстрого создания интерфейса редактирования используйте функцию `createTerraDrawWithUI`:
-
-```ts
-import { load } from '@2gis/mapgl';
-import { createTerraDrawWithUI } from '@2gis/mapgl-terra-draw';
-
-load().then((mapgl) => {
-    const map = new mapgl.Map('map', {
-        center: [55.31878, 25.23584],
-        zoom: 13,
-        key: 'your-api-key',
-        enableTrackResize: true,
-    });
-
-    map.on("styleload", () => {
-        const { draw, cleanup } = createTerraDrawWithUI({
-            map,
-            mapgl,
-            config: {
-                controls: ["select", "point", "polygon", "circle", "download", "clear"],
-            }
-        });
-
-        // Для очистки ресурсов при необходимости
-        // cleanup();
-    });
-});
-```
-
-### Настройка UI
-
-```ts
-interface UiConfig {
-    controls?: UiControl[];      // Какие инструменты и кнопки показывать
-}
-
-type UiControl = 
-    | "select" 
-    | "point" 
-    | "linestring" 
-    | "polygon" 
-    | "freehand" 
-    | "circle" 
-    | "rectangle" 
-    | "angled-rectangle" 
-    | "sector" 
-    | "sensor"
-    | "download"    // Кнопка скачивания GeoJSON
-    | "clear";      // Кнопка очистки
-```
-
-### CSS стили и Material Icons
-
-UI использует Material Icons для отображения иконок. Добавьте подключение шрифта в ваш HTML:
+For proper UI display you should link material icons in your app
 
 ```html
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
 
-Для стилизации UI добавьте CSS:
+and plug this CSS
 
 ```css
 .terra-draw-controls {
@@ -156,78 +131,49 @@ UI использует Material Icons для отображения иконо�
 
 ### `TerraDrawMapGlAdapter`
 
-Основной адаптер для интеграции terra-draw с MapGL.
-
-#### Конструктор
+Adapter class itself.
+ 
+#### Contructor
 
 ```ts
 new TerraDrawMapGlAdapter({
-    map: mapgl.Map,              // Экземпляр MapGL карты
-    mapgl: typeof mapgl,         // MapGL модуль
+    map: mapgl.Map,
+    mapgl: typeof mapgl,
     coordinatePrecision?: number // Точность координат (по умолчанию 9)
 });
 ```
 
 ### `createTerraDrawWithUI`
 
-Создает TerraDraw с готовым UI.
+Ui helper to quickly instantiate a terradraw with a simple UI.
 
-#### Параметры
+#### Params
 
 ```ts
 interface TerraModeUiOptions {
-    map: mapgl.Map;                                    // Экземпляр MapGL карты
-    mapgl: typeof mapgl;                              // MapGL модуль
-    container?: HTMLElement;                          // Контейнер для UI (по умолчанию map.getContainer())
-    config?: UiConfig;                               // Настройки UI
-    adapterConfig?: TerraDrawExtend.BaseAdapterConfig; // Дополнительные настройки адаптера
+    map: mapgl.Map;
+    mapgl: typeof mapgl;
+    container?: HTMLElement;
+    config?: UiConfig;
+    adapterConfig?: TerraDrawExtend.BaseAdapterConfig;
 }
 ```
 
-#### Возвращает
+#### Returns
 
 ```ts
 {
-    draw: TerraDraw;     // Экземпляр TerraDraw
-    cleanup: () => void; // Функция для очистки ресурсов
+    draw: TerraDraw;
+    cleanup: () => void;
 }
 ```
 
 ### `createDefaultModes`
 
-Создает набор режимов по умолчанию со всеми поддерживаемыми инструментами.
+Default modes set.
 
 ```ts
 import { createDefaultModes } from '@2gis/mapgl-terra-draw';
 
 const modes = createDefaultModes();
-```
-
-## Примеры
-
-В папке `examples/` вы найдете:
-
-- `usage.ts` - базовые примеры использования адаптера и UI
-- `custom-ui.ts` - пример кастомизации иконок и лейблов
-
-## Структура проекта
-
-Код библиотеки разделен на несколько модулей:
-
-- `adapter.ts` - основной адаптер `TerraDrawMapGlAdapter` для интеграции с MapGL
-- `modes.ts` - конфигурация режимов рисования по умолчанию
-- `ui.ts` - UI компоненты и функция `createTerraDrawWithUI`
-- `index.ts` - главный файл с экспортами всех модулей
-
-Все экспорты доступны через главный модуль:
-
-```ts
-import { 
-	TerraDrawMapGlAdapter,    // Адаптер
-	createDefaultModes,       // Режимы по умолчанию
-	createTerraDrawWithUI,    // UI функция
-	UiControl,               // Типы
-	UiConfig,
-	TerraModeUiOptions 
-} from '@2gis/mapgl-terra-draw';
 ```
