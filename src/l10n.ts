@@ -38,7 +38,7 @@ export const CONTROL_CONFIGS: Record<string, ControlConfig> = {
 	},
 	"angled-rectangle": {
 		label: "Angled Rectangle",
-		icon: "crop_rotate", // повернутый прямоугольник
+		icon: "thermostat_carbon", // повернутый прямоугольник
 	},
 	sector: {
 		label: "Sector",

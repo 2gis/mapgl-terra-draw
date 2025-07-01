@@ -129,7 +129,14 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
 	 * Enables or disables the double-click to zoom functionality on the map.
 	 * @param enabled Set to true to enable double-click to zoom, or false to disable it.
 	 */
-	public setDoubleClickToZoom(_enabled: boolean) {}
+	public setDoubleClickToZoom(enabled: boolean) {
+		const mapImpl = (this._map as any)._impl;
+		if (enabled) {
+			mapImpl.modules.handler.unblock();
+		} else {
+			mapImpl.modules.handler.block();
+		}
+	}
 
 	/**
 	 * Updates the current style settings
