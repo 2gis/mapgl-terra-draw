@@ -1,13 +1,14 @@
 {
   "name": "@2gis/mapgl-terra-draw",
   "description": "TerraDraw adapter for MapGL JS API",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/mapgl-terra-draw.cjs",
   "module": "dist/mapgl-terra-draw.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist", "LICENSE"
+    "dist",
+    "LICENSE"
   ],
   "scripts": {
     "start": "vite demo",
