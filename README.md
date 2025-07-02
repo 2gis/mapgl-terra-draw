@@ -25,15 +25,15 @@ load().then((mapgl) => {
     const map = new mapgl.Map('map', {
         center: [55.31878, 25.23584],
         zoom: 13,
-        key: 'your-api-key',
+        key: 'Your MapGL JS API key',
         enableTrackResize: true,
     });
 
-    map.on("styleload", () => {
-        const { draw, cleanup } = createTerraDrawWithUI({
+    map.on('styleload', () => {
+        createTerraDrawWithUI({
             map,
-            mapgl,
-            controls: ["color", "select", "point", "polygon", "circle", "download", "clear"],
+            mapgl: mapgl as any,
+            controls: ['color', 'select', 'point', 'polygon', 'circle', 'download', 'clear'],
         });
     });
 });
@@ -41,22 +41,29 @@ load().then((mapgl) => {
 
 ## Advanced usage
 
-If you want to deep integrate with terra-draw or create your own UI.
+If advanced cases (use your custom drawing mode, customize a very flexible TerraDraw [selection behaviour](https://github.com/JamesLMilner/terra-draw/blob/main/guides/4.MODES.md#selection-mode), design a fancy UI, e.g.) you can use `TerraDrawMapGlAdapter` class directly.
+
+This gives you much more flexibility, but puts a some bunch of work on your side. Here is a simple example:
 
 ```ts
 import { load } from '@2gis/mapgl';
-import { TerraDraw, TerraDrawPointMode, TerraDrawPolygonMode } from 'terra-draw';
+import {
+    TerraDraw,
+    TerraDrawPointMode,
+    TerraDrawPolygonMode,
+    TerraDrawSelectMode,
+} from 'terra-draw';
 import { TerraDrawMapGlAdapter } from '@2gis/mapgl-terra-draw';
 
 load().then((mapgl) => {
     const map = new mapgl.Map('map', {
         center: [55.31878, 25.23584],
         zoom: 13,
-        key: 'your-api-key',
+        key: 'Your MapGL JS API key',
         enableTrackResize: true,
     });
 
-    map.on("styleload", () => {
+    map.on('styleload', () => {
         const draw = new TerraDraw({
             adapter: new TerraDrawMapGlAdapter({
                 map,
@@ -64,10 +71,45 @@ load().then((mapgl) => {
                 coordinatePrecision: 9,
             }),
             modes: [
+                new TerraDrawSelectMode(),
                 new TerraDrawPointMode(),
                 new TerraDrawPolygonMode(),
             ],
         });
+
+        const buttons = document.createElement('div');
+        buttons.style.display = 'flex';
+        buttons.style.flexDirection = 'column';
+        buttons.style.gap = '8px';
+        new mapgl.Control(map, buttons, { position: 'centerLeft' });
+
+        const selectButton = document.createElement('button');
+        selectButton.innerText = 'select';
+        selectButton.addEventListener('click', () => {
+            draw.setMode('select');
+        });
+        buttons.appendChild(selectButton);
+
+        const pointButton = document.createElement('button');
+        pointButton.innerText = 'point';
+        pointButton.addEventListener('click', () => {
+            draw.setMode('point');
+        });
+        buttons.appendChild(pointButton);
+
+        const polygonButton = document.createElement('button');
+        polygonButton.innerText = 'polygon';
+        polygonButton.addEventListener('click', () => {
+            draw.setMode('polygon');
+        });
+        buttons.appendChild(polygonButton);
+
+        const clearButton = document.createElement('button');
+        clearButton.innerText = 'clear';
+        clearButton.addEventListener('click', () => {
+            draw.clear();
+        });
+        buttons.appendChild(clearButton);
 
         draw.start();
     });
@@ -80,6 +122,13 @@ UI relies on Material Icons font to display icons. So you should include followi
 
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+```
+
+## Deploy
+
+```
+npm run build
+npm publish --access=public
 ```
 
 ## LICENSE
