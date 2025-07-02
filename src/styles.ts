@@ -6,8 +6,8 @@ export interface Style {
 }
 
 export const defaultStyle: Style = {
-    fillColor: '#3388ff',
-    outlineColor: '#3388ff33',
+    fillColor: '#3388ff33',
+    outlineColor: '#3388ff',
     outlineWidth: 3,
     pointCap: 'round',
 };

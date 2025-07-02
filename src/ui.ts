@@ -1,6 +1,6 @@
 import './ui.css';
 import 'vanilla-colorful';
-import { TerraDraw, TerraDrawExtend } from "terra-draw";
+import { TerraDraw } from "terra-draw";
 import type * as mapgl from "@2gis/mapgl/types";
 import { TerraDrawMapGlAdapter } from "./adapter";
 import { createDefaultModes } from "./modes";
@@ -8,7 +8,7 @@ import { CONTROL_CONFIGS } from "./l10n";
 import { Style, defaultStyle, makeTransparent } from "./styles";
 
 
-export type UiControl = 
+export type UiControlType = 
 	| "select" 
 	| "point" 
 	| "linestring" 
@@ -25,28 +25,20 @@ export type UiControl =
 	| "stroke-width"
 	| "point-cap";
 
-export interface UiConfig {
-	controls?: UiControl[];
-	style?: Style;
-	drawingStyle?: Style;
-}
-
-export interface TerraModeUiOptions {
+export interface MapDrawingOptions {
 	map: mapgl.Map;
 	mapgl: typeof mapgl;
 	container?: HTMLElement;
-	config?: UiConfig;
-	adapterConfig?: TerraDrawExtend.BaseAdapterConfig;
+	controls?: UiControlType[];
+	style?: Style;
 }
+
+const defaultControls: UiControlType[] = ["select", "point", "linestring", "polygon", "freehand", "circle", "angled-rectangle", "color", "stroke-width", "point-cap", "download", "clear"];
 
 /**
  * Creates UI controls for TerraDraw
  */
-function createUiControls(container: HTMLElement, config: UiConfig = {}): HTMLElement {
-	const {
-		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "color", "stroke-width", "point-cap", "download", "clear"],
-	} = config;
-
+function createUiControls(container: HTMLElement, controls: UiControlType[], style: Style = defaultStyle): HTMLElement {
 	const controlsElement = document.createElement('div');
 	controlsElement.className = 'terra-draw-controls';
 
@@ -65,7 +57,7 @@ function createUiControls(container: HTMLElement, config: UiConfig = {}): HTMLEl
 		const styleGroup = createControlGroup('row');
 		styleControls.forEach((control) => {
 			if (control === "color") {
-				const colorControl = createColorControl(config.style ?? defaultStyle);
+				const colorControl = createColorControl(style ?? defaultStyle);
 				styleGroup.appendChild(colorControl);
 			} else if (control === "stroke-width") {
 				const strokeWidthControl = createStrokeWidthControl();
@@ -306,18 +298,9 @@ function triggerDownload(filename: string, data: string) {
 /**
  * Creates and initializes TerraDraw with UI controls
  */
-export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: TerraDraw; cleanup: () => void } {
-	const {
-		map,
-		mapgl,
-		container = map.getContainer(),
-		config = {},
-		adapterConfig = {}
-	} = options;
+export function createTerraDrawWithUI({ map, mapgl, container = map.getContainer(), controls = defaultControls, style }: MapDrawingOptions): { draw: TerraDraw; cleanup: () => void } {
 
-	// Merge styles with defaults
-	const currentStyle = { ...defaultStyle, ...config.style };
-	const currentDrawingStyle = { ...currentStyle, ...config.drawingStyle };
+	const currentStyle = { ...defaultStyle, ...style };
 
 	// Create adapter
 	const adapter = new TerraDrawMapGlAdapter({
@@ -325,8 +308,6 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 		mapgl,
 		coordinatePrecision: 9,
 		style: currentStyle,
-		drawingStyle: currentDrawingStyle,
-		...adapterConfig,
 	});
 
 	// Create TerraDraw instance
@@ -336,18 +317,13 @@ export function createTerraDrawWithUI(options: TerraModeUiOptions): { draw: Terr
 	});
 
 	// Create UI controls
-	const controlsElement = createUiControls(container, config);
+	const controlsElement = createUiControls(container, controls, currentStyle);
 
 	// State for tracking current selection
 	const currentSelected: { button: HTMLElement | undefined; mode: string } = {
 		button: undefined,
 		mode: "static",
 	};
-
-	// Add event handlers for mode changes
-	const {
-		controls = ["select", "point", "linestring", "polygon", "freehand", "circle", "rectangle", "angled-rectangle", "sector", "sensor", "color", "stroke-width", "point-cap", "download", "clear"],
-	} = config;
 
 	// Разделяем контролы на рисующие и служебные
 	const drawingControls = controls.filter(control => 

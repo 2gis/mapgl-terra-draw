@@ -3,8 +3,12 @@
   "description": "TerraDraw adapter for MapGL JS API",
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/mapgl-terra-draw.cjs",
+  "module": "dist/mapgl-terra-draw.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist", "LICENSE"
+  ],
   "scripts": {
     "start": "vite demo",
     "build": "npm run build:lib && npm run build:types",
@@ -18,8 +22,8 @@
     "mapgl",
     "terradraw"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Michel Beloshitsky <itano@yandex.ru>",
+  "license": "MIT",
   "devDependencies": {
     "@types/geojson": "^7946.0.16",
     "prettier": "^3.6.0",
@@ -28,8 +32,8 @@
   },
   "dependencies": {
     "@2gis/mapgl": "^1.61.0",
-    "geojson": "^0.5.0",
     "terra-draw": "^1.8.0",
+    "geojson": "^0.5.0",
     "vanilla-colorful": "^0.7.2"
   }
 }

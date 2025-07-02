@@ -11,9 +11,8 @@ export { createDefaultModes } from "./modes";
 // Экспорты UI
 export { 
 	createTerraDrawWithUI,
-	type UiControl,
-	type UiConfig,
-	type TerraModeUiOptions 
+	type UiControlType,
+	type MapDrawingOptions 
 } from "./ui";
 
 // Экспорты локализации

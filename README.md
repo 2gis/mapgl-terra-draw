@@ -14,11 +14,12 @@ Install library
 npm install @2gis/mapgl-terra-draw
 ```
 
-and use ui-helper `createTerraDrawWithUI`:
+Use ui-helper `createTerraDrawWithUI` and not forget to plug css:
 
 ```ts
 import { load } from '@2gis/mapgl';
 import { createTerraDrawWithUI } from '@2gis/mapgl-terra-draw';
+import '@2gis/mapgl-terra-draw/dist/mapgl-terra-draw.css';
 
 load().then((mapgl) => {
     const map = new mapgl.Map('map', {
@@ -32,9 +33,7 @@ load().then((mapgl) => {
         const { draw, cleanup } = createTerraDrawWithUI({
             map,
             mapgl,
-            config: {
-                controls: ["select", "point", "polygon", "circle", "download", "clear"],
-            }
+            controls: ["color", "select", "point", "polygon", "circle", "download", "clear"],
         });
     });
 });
@@ -75,109 +74,14 @@ load().then((mapgl) => {
 });
 ```
 
-### CSS and Material Icons
+## Material Icons
 
-For proper UI display you should link material icons in your app
+UI relies on Material Icons font to display icons. So you should include following `link` to your HTML head.
 
 ```html
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 ```
 
-and plug this CSS
+## LICENSE
 
-```css
-.terra-draw-controls {
-    z-index: 1;
-    position: absolute;
-    top: 0; 
-    left: 0;
-    margin: 16px;
-}
-
-.terra-draw-controls .group {
-    display: flex;
-    background: #ffffff;
-    overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
-    flex-direction: column;
-    margin: 16px 0;
-}
-
-.terra-draw-controls .group .item {
-    padding: 8px;
-    border: none;
-    background: #ffffff;
-    color: #262626;
-    cursor: pointer;
-    border-bottom: 1px solid #e6e6e6;
-    font-size: 13px;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    min-height: 40px;
-}
-
-.terra-draw-controls .group .item:hover {
-    color: rgba(38, 38, 38, 0.7);
-    background: #f8f8f8;
-}
-
-.terra-draw-controls .group .active {
-    color: #028eff;
-    background: #e3f2fd;
-}
-```
-
-## API
-
-### `TerraDrawMapGlAdapter`
-
-Adapter class itself.
- 
-#### Contructor
-
-```ts
-new TerraDrawMapGlAdapter({
-    map: mapgl.Map,
-    mapgl: typeof mapgl,
-    coordinatePrecision?: number // Точность координат (по умолчанию 9)
-});
-```
-
-### `createTerraDrawWithUI`
-
-Ui helper to quickly instantiate a terradraw with a simple UI.
-
-#### Params
-
-```ts
-interface TerraModeUiOptions {
-    map: mapgl.Map;
-    mapgl: typeof mapgl;
-    container?: HTMLElement;
-    config?: UiConfig;
-    adapterConfig?: TerraDrawExtend.BaseAdapterConfig;
-}
-```
-
-#### Returns
-
-```ts
-{
-    draw: TerraDraw;
-    cleanup: () => void;
-}
-```
-
-### `createDefaultModes`
-
-Default modes set.
-
-```ts
-import { createDefaultModes } from '@2gis/mapgl-terra-draw';
-
-const modes = createDefaultModes();
-```
+MIT
