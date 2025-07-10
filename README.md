@@ -118,6 +118,21 @@ load().then((mapgl) => {
 });
 ```
 
+## How to get a drawed data
+
+Use a [.getSnapshot()](https://jameslmilner.github.io/terra-draw/classes/terra_draw.TerraDraw.html#getSnapshot) method of a TerraDraw.
+
+```ts
+const { draw } = createTerraDrawWithUI({
+    ...
+});
+
+...
+
+draw.getSnapshot();
+```
+
+
 ## Material Icons
 
 UI relies on Material Icons font to display icons. So you should include following `link` to your HTML head.
