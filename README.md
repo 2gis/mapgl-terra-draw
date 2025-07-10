@@ -6,6 +6,8 @@
 
 [Demo](https://2gis.github.io/mapgl-terra-draw/)
 
+[Drawing Modes User Manual](MODES.md)
+
 ## Getting started
 
 Install library
