@@ -6,6 +6,7 @@ import { TerraDrawMapGlAdapter } from './adapter';
 import { createDefaultModes } from './modes';
 import { CONTROL_CONFIGS } from './l10n';
 import { Style, defaultStyle, makeTransparent } from './styles';
+import { FeatureId } from 'terra-draw/dist/extend';
 
 export type UiControlType =
     | 'select'
@@ -30,6 +31,7 @@ export interface MapDrawingOptions {
     container?: HTMLElement;
     controls?: UiControlType[];
     style?: Style;
+    stopByDoubleClick?: boolean;
 }
 
 const defaultControls: UiControlType[] = [
@@ -143,8 +145,9 @@ function createControlButton(label: string, icon: string, id: string): HTMLEleme
     iconElement.className = 'material-symbols-outlined';
     iconElement.textContent = icon;
     iconElement.style.cssText = `
-		font-size: 18px;
+		font-size: 24px;
 		line-height: 1;
+        user-select: none;
 	`;
 
     button.appendChild(iconElement);
@@ -327,6 +330,7 @@ export function createTerraDrawWithUI({
     container = map.getContainer(),
     controls = defaultControls,
     style,
+    stopByDoubleClick = true,
 }: MapDrawingOptions): { draw: TerraDraw; cleanup: () => void } {
     const currentStyle = { ...defaultStyle, ...style };
 
@@ -431,18 +435,45 @@ export function createTerraDrawWithUI({
         }
     }
 
+    let selectedId: FeatureId | null = null;
+
     // Add clear handler
     if (controls.indexOf('clear') !== -1) {
         const clearButton = document.getElementById('clear');
         if (clearButton) {
             clearButton.addEventListener('click', () => {
-                if (!confirm('Are you sure want to clear all features?')) {
-                    return;
+                if (selectedId) {
+                    draw.removeFeatures([selectedId]);
+                } else {
+                    if (!confirm('Are you sure want to clear all features?')) {
+                        return;
+                    }
+                    draw.clear();
                 }
-                draw.clear();
             });
         }
     }
+
+    if (stopByDoubleClick) {
+        // HACK. To get doubleclick work like in other drawing libraries
+        // we need to temporarily switch to a render mode and restore
+        // after little timeout. So we avoid start drawing again in a second 
+        // click of doubleclick.
+        draw.on('finish', (_id, context) => {
+            const currentMode = context.mode;
+            draw.setMode('arbitrary');
+            setTimeout(() => {
+                draw.setMode(currentMode);
+            }, 500);
+        });
+    }
+
+    draw.on('select', (id) => {
+        selectedId = id;
+    });
+    draw.on('deselect', () => {
+        selectedId = null;
+    });
 
     // Start drawing
     draw.start();
