@@ -148,7 +148,6 @@ function createControlButton(label: string, icon: string, id: string): HTMLEleme
 		font-size: 24px;
 		line-height: 1;
         user-select: none;
-        color: #4a4a4a;
 	`;
 
     button.appendChild(iconElement);
