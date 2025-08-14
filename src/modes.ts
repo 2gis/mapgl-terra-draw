@@ -108,7 +108,7 @@ export function createDefaultModes() {
         new TerraDrawRectangleMode(),
         new TerraDrawCircleMode(),
         new TerraDrawFreehandMode({
-            autoClose: true,
+            autoClose: false,
             minDistance: 10,
             pointerDistance: 10,
         }),
