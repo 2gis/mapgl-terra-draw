@@ -8,7 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es', 'cjs']
+      name: 'mapglTerraDraw',
+      formats: ['es', 'umd', 'cjs']
     },
     rollupOptions: {
       external: ['terra-draw', '@2gis/mapgl'],
