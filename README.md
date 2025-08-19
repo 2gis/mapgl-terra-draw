@@ -41,6 +41,49 @@ load().then((mapgl) => {
 });
 ```
 
+Or directly in HTML via unpkg CDN
+
+```html
+<html>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/@2gis/mapgl-terra-draw@0.2.0/dist/mapgl-terra-draw.css" />
+        <script src="https://mapgl.2gis.com/api/js/v1"></script>
+        <script src="https://unpkg.com/terra-draw@1.0.0/dist/terra-draw.umd.js"></script>
+        <script src="https://unpkg.com/@2gis/mapgl-terra-draw/dist/mapgl-terra-draw.umd.cjs"></script>
+        <style>
+            html,
+            body,
+            #container {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script>
+            const map = new mapgl.Map('container', {
+                center: [55.31878, 25.23584],
+                zoom: 13,
+                key: 'bfd8bbca-8abf-11ea-b033-5fa57aae2de7',
+                enableTrackResize: true,
+            });
+
+            map.on('styleload', () => {
+                mapglTerraDraw.createTerraDrawWithUI({
+                    map,
+                    mapgl: mapgl,
+                    controls: ['color', 'select', 'point', 'polygon', 'circle', 'download', 'clear'],
+                });
+            });
+        </script>
+    </body>
+</html>
+```
+
 ## Advanced usage
 
 If advanced cases (use your custom drawing mode, customize a very flexible TerraDraw [selection behaviour](https://github.com/JamesLMilner/terra-draw/blob/main/guides/4.MODES.md#selection-mode), design a fancy UI, e.g.) you can use `TerraDrawMapGlAdapter` class directly.
