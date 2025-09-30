@@ -33,7 +33,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
     private _container: HTMLElement;
     private _dynamicObjects: Record<string, mapgl.Polygon | mapgl.Polyline | mapgl.Marker>;
     private _style: Style;
-    private _drawingStyle: Style;
 
     private featureStyles: Record<string, Style>;
 
@@ -42,7 +41,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
             map: mapgl.Map;
             mapgl: typeof mapgl;
             style?: Style;
-            drawingStyle?: Style;
         } & TerraDrawExtend.BaseAdapterConfig,
     ) {
         super(config);
@@ -52,7 +50,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
         this._container = this._map.getContainer();
         this._dynamicObjects = {};
         this._style = { ...defaultStyle, ...config.style };
-        this._drawingStyle = { ...this._style, ...config.drawingStyle };
         this.featureStyles = {};
     }
 
@@ -145,11 +142,8 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
         this._style = { ...this._style, ...style };
     }
 
-    /**
-     * Updates the current drawing style settings
-     */
-    public updateDrawingStyle(style: Partial<Style>) {
-        this._drawingStyle = { ...this._drawingStyle, ...style };
+    public getFeatures() {
+        return this.featureStyles;
     }
 
     private updateFeature(feature: GeoJSONStoreFeatures) {
@@ -171,10 +165,8 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
             this.featureStyles[stylingFeatureId] = { ...this._style };
         }
 
-        // Determine which style to use based on feature state
-        const isDrawing = feature.properties.mode !== undefined;
         const currentStyle =
-            this.featureStyles[stylingFeatureId] ?? (isDrawing ? this._drawingStyle : this._style);
+            this.featureStyles[stylingFeatureId] ?? this._style;
 
         switch (feature.geometry.type) {
             case 'Polygon': {

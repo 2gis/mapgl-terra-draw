@@ -16,12 +16,9 @@ export const defaultStyle: Style = {
  * Converts a hex color to transparent version by adding alpha
  */
 export function makeTransparent(color: string, alpha: string = '33'): string {
-    // Remove # if present
     const cleanColor = color.replace('#', '');
 
-    // Ensure it's a valid hex color
     if (cleanColor.length === 3) {
-        // Convert short hex to long hex
         const longHex = cleanColor
             .split('')
             .map((c) => c + c)

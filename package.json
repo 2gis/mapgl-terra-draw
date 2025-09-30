@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "start": "vite demo",
-    "build": "npm run build:lib && npm run build:types",
+    "build": "npm run build:lib && npm run build:types && npm run build:es6",
     "build:lib": "vite -c vite.config.lib.js build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
+    "build:es6": "tsc",
     "build:demo": "vite build demo",
     "prettier": "prettier --check \"./**/*..{ts,html,css,md}\"",
     "prettier:write": "prettier --write \"./**/*.{ts,html,css,md}\""
