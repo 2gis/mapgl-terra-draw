@@ -82,11 +82,10 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
      * @param enabled Set to true to enable map dragging, or false to disable it.
      */
     public setDraggability(enabled: boolean) {
-        const mapImpl = (this._map as any)._impl;
         if (enabled) {
-            mapImpl.modules.handler.unblock();
+            this._map.unblockInteraction()
         } else {
-            mapImpl.modules.handler.block();
+            this._map.blockInteraction();
         }
     }
 
@@ -130,11 +129,10 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
      * @param enabled Set to true to enable double-click to zoom, or false to disable it.
      */
     public setDoubleClickToZoom(enabled: boolean) {
-        const mapImpl = (this._map as any)._impl;
         if (enabled) {
-            mapImpl.modules.handler.unblock();
+            this._map.unblockInteraction()
         } else {
-            mapImpl.modules.handler.block();
+            this._map.blockInteraction();
         }
     }
 

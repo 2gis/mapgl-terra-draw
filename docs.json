@@ -1,0 +1,1248 @@
+{
+  "typescript": {
+    "TerraDrawMapGlAdapter": {
+      "fileName": "src/adapter.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "class",
+      "name": "TerraDrawMapGlAdapter",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L30",
+      "extends": [
+        "TerraDrawBaseAdapter<>"
+      ],
+      "methods": [
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "clear",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L260",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Clears the map and store of all rendered data layers</p>\n",
+                  {
+                    "tag": "returns",
+                    "value": "[object Object]"
+                  }
+                ],
+                "contentsRaw": "Clears the map and store of all rendered data layers\n\n@returns [object Object]",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "clear",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L260",
+              "parameters": [],
+              "returnType": "void",
+              "type": "() => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "getCoordinatePrecision",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L275",
+          "signatures": [
+            {
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "getCoordinatePrecision",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L275",
+              "parameters": [],
+              "returnType": "number",
+              "type": "() => number"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "getLngLatFromEvent",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L64",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Returns the longitude and latitude coordinates from a given PointerEvent on the map.</p>\n",
+                  {
+                    "tag": "returns",
+                    "value": "[object Object]"
+                  }
+                ],
+                "contentsRaw": "Returns the longitude and latitude coordinates from a given PointerEvent on the map.\n\n@returns [object Object]",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "getLngLatFromEvent",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L64",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The PointerEvent or MouseEvent  containing the screen coordinates of the pointer.</p>\n"
+                    ],
+                    "contentsRaw": "The PointerEvent or MouseEvent  containing the screen coordinates of the pointer.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "event",
+                  "type": "PointerEvent<> | MouseEvent<>"
+                }
+              ],
+              "returnType": "",
+              "type": "(event: PointerEvent<> | MouseEvent<>) => "
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "getMapEventElement",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L76",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Retrieves the HTML element of the Mapbox element that handles interaction events</p>\n",
+                  {
+                    "tag": "returns",
+                    "value": "[object Object]"
+                  }
+                ],
+                "contentsRaw": "Retrieves the HTML element of the Mapbox element that handles interaction events\n\n@returns [object Object]",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "getMapEventElement",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L76",
+              "parameters": [],
+              "returnType": "HTMLCanvasElement<>",
+              "type": "() => HTMLCanvasElement<>"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "project",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L99",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Converts longitude and latitude coordinates to pixel coordinates in the map container.</p>\n",
+                  {
+                    "tag": "returns",
+                    "value": "[object Object]"
+                  }
+                ],
+                "contentsRaw": "Converts longitude and latitude coordinates to pixel coordinates in the map container.\n\n@returns [object Object]",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "project",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L99",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The longitude coordinate to project.</p>\n"
+                    ],
+                    "contentsRaw": "The longitude coordinate to project.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "lng",
+                  "type": "number"
+                },
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The latitude coordinate to project.</p>\n"
+                    ],
+                    "contentsRaw": "The latitude coordinate to project.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "lat",
+                  "type": "number"
+                }
+              ],
+              "returnType": "",
+              "type": "(lng: number, lat: number) => "
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "register",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L283",
+          "signatures": [
+            {
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "register",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L283",
+              "parameters": [
+                {
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "callbacks",
+                  "type": "TerraDrawCallbacks"
+                }
+              ],
+              "returnType": "void",
+              "type": "(callbacks: TerraDrawCallbacks) => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "render",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L241",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Renders GeoJSON features on the map using the provided styling configuration.</p>\n"
+                ],
+                "contentsRaw": "Renders GeoJSON features on the map using the provided styling configuration.",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "render",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L241",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>An object containing arrays of created, updated, and unchanged features to render.</p>\n"
+                    ],
+                    "contentsRaw": "An object containing arrays of created, updated, and unchanged features to render.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "changes",
+                  "type": "TerraDrawChanges"
+                },
+                {
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "_styling",
+                  "type": "TerraDrawStylingFunction"
+                }
+              ],
+              "returnType": "void",
+              "type": "(changes: TerraDrawChanges, _styling: TerraDrawStylingFunction) => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "setCursor",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L119",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Sets the cursor style for the map container.</p>\n"
+                ],
+                "contentsRaw": "Sets the cursor style for the map container.",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "setCursor",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L119",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The CSS cursor style to apply, or &#39;unset&#39; to remove any previously applied cursor style.</p>\n"
+                    ],
+                    "contentsRaw": "The CSS cursor style to apply, or 'unset' to remove any previously applied cursor style.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "cursor",
+                  "type": "\"move\" | \"unset\" | \"grab\" | \"grabbing\" | \"crosshair\" | \"pointer\" | \"wait\""
+                }
+              ],
+              "returnType": "void",
+              "type": "(cursor: \"move\" | \"unset\" | \"grab\" | \"grabbing\" | \"crosshair\" | \"pointer\" | \"wait\") => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "setDoubleClickToZoom",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L132",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Enables or disables the double-click to zoom functionality on the map.</p>\n"
+                ],
+                "contentsRaw": "Enables or disables the double-click to zoom functionality on the map.",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "setDoubleClickToZoom",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L132",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>Set to true to enable double-click to zoom, or false to disable it.</p>\n"
+                    ],
+                    "contentsRaw": "Set to true to enable double-click to zoom, or false to disable it.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "enabled",
+                  "type": "boolean"
+                }
+              ],
+              "returnType": "void",
+              "type": "(enabled: boolean) => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "setDraggability",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L84",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Enables or disables the draggable functionality of the map.</p>\n"
+                ],
+                "contentsRaw": "Enables or disables the draggable functionality of the map.",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "setDraggability",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L84",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>Set to true to enable map dragging, or false to disable it.</p>\n"
+                    ],
+                    "contentsRaw": "Set to true to enable map dragging, or false to disable it.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "enabled",
+                  "type": "boolean"
+                }
+              ],
+              "returnType": "void",
+              "type": "(enabled: boolean) => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "unproject",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L110",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Converts pixel coordinates in the map container to longitude and latitude coordinates.</p>\n",
+                  {
+                    "tag": "returns",
+                    "value": "[object Object]"
+                  }
+                ],
+                "contentsRaw": "Converts pixel coordinates in the map container to longitude and latitude coordinates.\n\n@returns [object Object]",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "unproject",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L110",
+              "parameters": [
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The x-coordinate in the map container to unproject.</p>\n"
+                    ],
+                    "contentsRaw": "The x-coordinate in the map container to unproject.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "x",
+                  "type": "number"
+                },
+                {
+                  "documentation": {
+                    "contents": [
+                      "<p>The y-coordinate in the map container to unproject.</p>\n"
+                    ],
+                    "contentsRaw": "The y-coordinate in the map container to unproject.",
+                    "metadata": {}
+                  },
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "y",
+                  "type": "number"
+                }
+              ],
+              "returnType": "",
+              "type": "(x: number, y: number) => "
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "unregister",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L279",
+          "signatures": [
+            {
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "unregister",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L279",
+              "parameters": [],
+              "returnType": "void",
+              "type": "() => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "updateDrawingStyle",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L151",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Updates the current drawing style settings</p>\n"
+                ],
+                "contentsRaw": "Updates the current drawing style settings",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "updateDrawingStyle",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L151",
+              "parameters": [
+                {
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "style",
+                  "type": "Partial<Style>"
+                }
+              ],
+              "returnType": "void",
+              "type": "(style: Partial<Style>) => void"
+            }
+          ]
+        },
+        {
+          "fileName": "src/adapter.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": true,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "method",
+          "name": "updateStyle",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L144",
+          "signatures": [
+            {
+              "documentation": {
+                "contents": [
+                  "<p>Updates the current style settings</p>\n"
+                ],
+                "contentsRaw": "Updates the current style settings",
+                "metadata": {}
+              },
+              "fileName": "src/adapter.ts",
+              "kind": "signature",
+              "name": "updateStyle",
+              "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L144",
+              "parameters": [
+                {
+                  "flags": {
+                    "isDeprecated": false,
+                    "isExternal": false,
+                    "isOptional": false,
+                    "isPrivate": false,
+                    "isProtected": false,
+                    "isPublic": false,
+                    "isRest": false,
+                    "isStatic": false
+                  },
+                  "kind": "parameter",
+                  "name": "style",
+                  "type": "Partial<Style>"
+                }
+              ],
+              "returnType": "void",
+              "type": "(style: Partial<Style>) => void"
+            }
+          ]
+        }
+      ],
+      "properties": [],
+      "accessors": [],
+      "constructorType": {
+        "fileName": "src/adapter.ts",
+        "flags": {
+          "isDeprecated": false,
+          "isExternal": false,
+          "isOptional": false,
+          "isPrivate": false,
+          "isProtected": false,
+          "isPublic": false,
+          "isRest": false,
+          "isStatic": false
+        },
+        "kind": "constructor",
+        "name": "constructor",
+        "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L40",
+        "signatures": [
+          {
+            "fileName": "src/adapter.ts",
+            "kind": "signature",
+            "name": "new TerraDrawMapGlAdapter",
+            "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/adapter.ts#L40",
+            "parameters": [
+              {
+                "flags": {
+                  "isDeprecated": false,
+                  "isExternal": false,
+                  "isOptional": false,
+                  "isPrivate": false,
+                  "isProtected": false,
+                  "isPublic": false,
+                  "isRest": false,
+                  "isStatic": false
+                },
+                "kind": "parameter",
+                "name": "config",
+                "type": " & BaseAdapterConfig"
+              }
+            ],
+            "returnType": "TerraDrawMapGlAdapter<>",
+            "type": "(config:  & BaseAdapterConfig) => TerraDrawMapGlAdapter<>"
+          }
+        ]
+      }
+    },
+    "createTerraDrawWithUI": {
+      "fileName": "src/ui.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "method",
+      "name": "createTerraDrawWithUI",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L327",
+      "signatures": [
+        {
+          "documentation": {
+            "contents": [
+              "<p>Creates and initializes TerraDraw with UI controls</p>\n"
+            ],
+            "contentsRaw": "Creates and initializes TerraDraw with UI controls",
+            "metadata": {}
+          },
+          "fileName": "src/ui.ts",
+          "kind": "signature",
+          "name": "createTerraDrawWithUI",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L327",
+          "parameters": [
+            {
+              "flags": {
+                "isDeprecated": false,
+                "isExternal": false,
+                "isOptional": false,
+                "isPrivate": false,
+                "isProtected": false,
+                "isPublic": false,
+                "isRest": false,
+                "isStatic": false
+              },
+              "kind": "parameter",
+              "name": "__namedParameters",
+              "type": "MapDrawingOptions"
+            }
+          ],
+          "returnType": "",
+          "type": "(__namedParameters: MapDrawingOptions) => "
+        }
+      ]
+    },
+    "makeTransparent": {
+      "fileName": "src/styles.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "method",
+      "name": "makeTransparent",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L18",
+      "signatures": [
+        {
+          "documentation": {
+            "contents": [
+              "<p>Converts a hex color to transparent version by adding alpha</p>\n"
+            ],
+            "contentsRaw": "Converts a hex color to transparent version by adding alpha",
+            "metadata": {}
+          },
+          "fileName": "src/styles.ts",
+          "kind": "signature",
+          "name": "makeTransparent",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L18",
+          "parameters": [
+            {
+              "flags": {
+                "isDeprecated": false,
+                "isExternal": false,
+                "isOptional": false,
+                "isPrivate": false,
+                "isProtected": false,
+                "isPublic": false,
+                "isRest": false,
+                "isStatic": false
+              },
+              "kind": "parameter",
+              "name": "color",
+              "type": "string"
+            },
+            {
+              "flags": {
+                "isDeprecated": false,
+                "isExternal": false,
+                "isOptional": false,
+                "isPrivate": false,
+                "isProtected": false,
+                "isPublic": false,
+                "isRest": false,
+                "isStatic": false
+              },
+              "kind": "parameter",
+              "name": "alpha",
+              "defaultValue": "'33'",
+              "type": "string"
+            }
+          ],
+          "returnType": "string",
+          "type": "(color: string, alpha?: string) => string"
+        }
+      ]
+    },
+    "createDefaultModes": {
+      "fileName": "src/modes.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "method",
+      "name": "createDefaultModes",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/modes.ts#L19",
+      "signatures": [
+        {
+          "documentation": {
+            "contents": [
+              "<p>Creates default modes configuration for TerraDraw</p>\n"
+            ],
+            "contentsRaw": "Creates default modes configuration for TerraDraw",
+            "metadata": {}
+          },
+          "fileName": "src/modes.ts",
+          "kind": "signature",
+          "name": "createDefaultModes",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/modes.ts#L19",
+          "parameters": [],
+          "returnType": "(TerraDrawCircleMode | TerraDrawFreehandMode | TerraDrawLineStringMode | TerraDrawPointMode | TerraDrawPolygonMode | TerraDrawRectangleMode | TerraDrawRenderMode | TerraDrawSelectMode | TerraDrawAngledRectangleMode | TerraDrawSectorMode | TerraDrawSensorMode)[]",
+          "type": "() => (TerraDrawCircleMode | TerraDrawFreehandMode | TerraDrawLineStringMode | TerraDrawPointMode | TerraDrawPolygonMode | TerraDrawRectangleMode | TerraDrawRenderMode | TerraDrawSelectMode | TerraDrawAngledRectangleMode | TerraDrawSectorMode | TerraDrawSensorMode)[]"
+        }
+      ]
+    },
+    "MapDrawingOptions": {
+      "fileName": "src/ui.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "interface",
+      "name": "MapDrawingOptions",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L28",
+      "methods": [],
+      "properties": [
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": true,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "container",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L31",
+          "type": "HTMLElement<>"
+        },
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": true,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "controls",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L32",
+          "type": "UiControlType[]"
+        },
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "map",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L29",
+          "type": "Map<>"
+        },
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "mapgl",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L30",
+          "type": "__module"
+        },
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": true,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "stopByDoubleClick",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L34",
+          "type": "boolean"
+        },
+        {
+          "fileName": "src/ui.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": true,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "style",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L33",
+          "type": "Style"
+        }
+      ]
+    },
+    "Style": {
+      "fileName": "src/styles.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "interface",
+      "name": "Style",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L1",
+      "methods": [],
+      "properties": [
+        {
+          "fileName": "src/styles.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "fillColor",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L2",
+          "type": "string"
+        },
+        {
+          "fileName": "src/styles.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "outlineColor",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L3",
+          "type": "string"
+        },
+        {
+          "fileName": "src/styles.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "outlineWidth",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L4",
+          "type": "number"
+        },
+        {
+          "fileName": "src/styles.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "pointCap",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/styles.ts#L5",
+          "type": "\"none\" | \"square\" | \"round\""
+        }
+      ]
+    },
+    "ControlConfig": {
+      "documentation": {
+        "contents": [
+          "<p>Localization</p>\n"
+        ],
+        "contentsRaw": "Localization",
+        "metadata": {}
+      },
+      "fileName": "src/l10n.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "interface",
+      "name": "ControlConfig",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/l10n.ts#L5",
+      "methods": [],
+      "properties": [
+        {
+          "fileName": "src/l10n.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "icon",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/l10n.ts#L7",
+          "type": "string"
+        },
+        {
+          "fileName": "src/l10n.ts",
+          "flags": {
+            "isDeprecated": false,
+            "isExternal": false,
+            "isOptional": false,
+            "isPrivate": false,
+            "isProtected": false,
+            "isPublic": false,
+            "isRest": false,
+            "isStatic": false
+          },
+          "kind": "property",
+          "name": "label",
+          "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/l10n.ts#L6",
+          "type": "string"
+        }
+      ]
+    },
+    "UiControlType": {
+      "fileName": "src/ui.ts",
+      "flags": {
+        "isDeprecated": false,
+        "isExternal": false,
+        "isOptional": false,
+        "isPrivate": false,
+        "isProtected": false,
+        "isPublic": false,
+        "isRest": false,
+        "isStatic": false
+      },
+      "kind": "type alias",
+      "name": "UiControlType",
+      "sourceUrl": "https://github.com/itanka9/mapgl-terra-draw/blob/89ffcb2df8d5b4c334c792070a1c5f9ea47463b6/src/ui.ts#L11",
+      "type": "\"select\" | \"point\" | \"linestring\" | \"polygon\" | \"freehand\" | \"circle\" | \"rectangle\" | \"angled-rectangle\" | \"sector\" | \"sensor\" | \"download\" | \"clear\" | \"color\" | \"stroke-width\" | \"point-cap\""
+    }
+  }
+}
