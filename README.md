@@ -163,7 +163,51 @@ load().then((mapgl) => {
 
 ## How to get a drawed data
 
-Use a [.getSnapshot()](https://jameslmilner.github.io/terra-draw/classes/terra_draw.TerraDraw.html#getSnapshot) method of a TerraDraw.
+To get drawing data with styling use this code snippet:
+
+```js
+const adapter = new TerraDrawMapGlAdapter({
+    ...
+});
+const { draw } = createTerraDrawWithUI({
+    adapter,
+    ...
+});
+
+const features = draw.getSnapshot();
+const { icons, layers } = adapter.addStyling(features);
+const featureCollection = {
+    type: 'FeatureCollection',
+    icons,
+    layers,
+    features,
+};
+```
+
+Here we obtain a standart GeoJSON FeatureCollection and put `icons` and `layers` props in the root (which is permitted by GeoJSON specification).
+
+To display this data, you should add `icons` and `layers` to your MapGL map, and add GeoJSON via GeoJsonSource
+
+```js
+for (const icon in featureCollection.icons) {
+    map.addIcon(icon, { url: featureCollection.icons[icon] });
+}
+for (const layer of featureCollection.layers) {
+    map.addLayer(layer);  
+}
+const source = new mapgl.GeoJsonSource(map, {
+    data: featureCollection,
+    attributes: {
+        name: 'terra-draw-output',
+    },
+});
+```
+
+You can use [demo on codepen](https://codepen.io/itanka9/pen/RNrRvaX) for reference.
+
+### Raw Data
+
+If you want just geojson shapes of drawed feature use a [.getSnapshot()](https://jameslmilner.github.io/terra-draw/classes/terra_draw.TerraDraw.html#getSnapshot) method of a TerraDraw.
 
 ```ts
 const { draw } = createTerraDrawWithUI({
@@ -174,7 +218,6 @@ const { draw } = createTerraDrawWithUI({
 
 draw.getSnapshot();
 ```
-
 
 ## Material Icons
 

@@ -9,6 +9,8 @@ import {
 import type * as mapgl from '@2gis/mapgl/types';
 import { Style, defaultStyle } from './styles';
 
+export type IconsMap = Record<string, string>;
+
 const dotIcon = (color: string, fillColor: string, cap: 'none' | 'round' | 'square' = 'round') => {
     let shape = '';
     if (cap === 'round') {
@@ -142,8 +144,95 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
         this._style = { ...this._style, ...style };
     }
 
-    public getFeatures() {
-        return this.featureStyles;
+    /**
+     * Adds styling to geojson features properties.
+     * 
+     * @param features - GeoJSON featureset (should be got from `draw.getSnapshot()` call).
+     */
+    public addStyling(features: GeoJSONStoreFeatures[]): { icons: IconsMap, layers: any[] } {
+        const iconsHash: Record<string, string> = {};
+        let iconIndex = 0;
+        const iconsMap: Record<string, string> = {};
+        const styleLayersHash: Record<string, string> = {};
+        const styleLayersMap: Record<string, any> = {};
+        let styleLayerIndex = 0;
+
+
+        function getIconName(icon: string) {
+            let iconName = iconsHash[icon]
+            if (!iconName) {
+                iconName = `terra-draw-icon-${iconIndex}`;
+                iconsHash[icon] = iconName;
+                iconsMap[iconName] = icon;
+                iconIndex++;
+            }
+            return iconName;
+        }
+
+        function getStyleLayerId(style: Style, geometryType: 'Point' | 'LineString' | 'Polygon') {
+            let featureStyle: any;
+            switch (geometryType) {
+                case 'Point':
+                    const icon = dotIcon(
+                        style.outlineColor,
+                        style.fillColor,
+                        style.pointCap,
+                    );
+                    const iconName = getIconName(icon);
+                    featureStyle = {
+                        type: 'point',
+                        style: {
+                            iconImage: iconName,
+                            iconWidth: 16,
+                            iconLabelingGroup: '__overlapped'
+                        }
+                    };
+                    break;
+                case 'LineString':
+                    featureStyle = {
+                        type: 'line',
+                        style: {
+                            color: style.outlineColor,
+                            width: style.outlineWidth,
+                        }
+                    };
+                    break;
+                case 'Polygon':
+                    featureStyle = {
+                        type: 'polygon',
+                        style: {
+                            color: style.fillColor,
+                            strokeColor: style.outlineColor,
+                            strokeWidth: style.outlineWidth,
+                        }
+                    };
+                    break;
+                default:
+                    console.error(`Unsupported geometry type: ${geometryType}`);
+                    featureStyle = {};
+            }
+            const styleKey = JSON.stringify(featureStyle);
+            let styleLayerId = styleLayersHash[styleKey];
+            if (!styleLayerId) {
+                styleLayerId = `terra-draw-${styleLayerIndex}`;
+                styleLayersHash[styleKey] = styleLayerId;
+                featureStyle.id = styleLayerId;
+                featureStyle.filter = ['==', ['get', 'styleLayer'], styleLayerId];
+                styleLayersMap[styleLayerId] = featureStyle;
+                styleLayerIndex++;
+            }
+            return styleLayerId;
+        }
+
+        for (const f of features) {
+            if (f.id) {
+                const style = this.featureStyles[f.id];
+                const styleLayerId = getStyleLayerId(style, f.geometry.type);
+                f.properties.styleLayer = styleLayerId;
+            }
+        }
+
+        return { icons: iconsMap, layers: Object.values(styleLayersMap) };
     }
 
     private updateFeature(feature: GeoJSONStoreFeatures) {
