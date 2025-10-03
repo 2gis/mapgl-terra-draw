@@ -9,8 +9,6 @@ import {
 import type * as mapgl from '@2gis/mapgl/types';
 import { Style, defaultStyle } from './styles';
 
-export type IconsMap = Record<string, string>;
-
 const dotIcon = (color: string, fillColor: string, cap: 'none' | 'round' | 'square' = 'round') => {
     let shape = '';
     if (cap === 'round') {
@@ -145,11 +143,16 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
     }
 
     /**
-     * Adds styling to geojson features properties.
+     * Adds styling to geojson features properties:
+     *  - calculates unique icons and style layers for GeoJSON features.
+     *  - assigns style layer IDs to each feature's properties based on its geometry type and style.
      * 
      * @param features - GeoJSON featureset (should be got from `draw.getSnapshot()` call).
+     *
+     * @returns an object containing a mapping of icon names to their data URIs and an array of style layer definitions.
+     *
      */
-    public addStyling(features: GeoJSONStoreFeatures[]): { icons: IconsMap, layers: any[] } {
+    public addStyling(features: GeoJSONStoreFeatures[]): { icons: Record<string, string>, layers: any[] } {
         const iconsHash: Record<string, string> = {};
         let iconIndex = 0;
         const iconsMap: Record<string, string> = {};
@@ -232,7 +235,7 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
             }
         }
 
-        return { icons: iconsMap, layers: Object.values(styleLayersMap) };
+        return { icons: iconsMap, layers: Object.keys(styleLayersMap).map(key => styleLayersMap[key]) };
     }
 
     private updateFeature(feature: GeoJSONStoreFeatures) {
