@@ -391,10 +391,6 @@ export function createTerraDrawWithUI({
                     outlineColor: color,
                     fillColor: transparentColor,
                 });
-                adapter.updateDrawingStyle({
-                    outlineColor: color,
-                    fillColor: transparentColor,
-                });
             });
         }
     }
@@ -405,7 +401,6 @@ export function createTerraDrawWithUI({
             strokeWidthControl.addEventListener('strokewidthchange', (event: any) => {
                 const width = event.detail.width;
                 adapter.updateStyle({ outlineWidth: width });
-                adapter.updateDrawingStyle({ outlineWidth: width });
             });
         }
     }
@@ -416,7 +411,6 @@ export function createTerraDrawWithUI({
             pointCapControl.addEventListener('pointcapchange', (event: any) => {
                 const cap = event.detail.cap;
                 adapter.updateStyle({ pointCap: cap });
-                adapter.updateDrawingStyle({ pointCap: cap });
             });
         }
     }
@@ -426,9 +420,13 @@ export function createTerraDrawWithUI({
         const downloadButton = document.getElementById('download');
         if (downloadButton) {
             downloadButton.addEventListener('click', () => {
+                const features = draw.getSnapshot();
+                const { icons, layers } = adapter.addStyling(features);
                 const fc = {
                     type: 'FeatureCollection',
-                    features: draw.getSnapshot(),
+                    icons,
+                    layers,
+                    features,
                 };
                 triggerDownload('features.json', JSON.stringify(fc, null, 2));
             });

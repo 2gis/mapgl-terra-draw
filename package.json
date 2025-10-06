@@ -1,7 +1,7 @@
 {
   "name": "@2gis/mapgl-terra-draw",
   "description": "TerraDraw adapter for MapGL JS API",
-  "version": "0.3.0",
+  "version": "0.4.0-styling.0",
   "type": "module",
   "main": "dist/mapgl-terra-draw.cjs",
   "module": "dist/mapgl-terra-draw.js",
@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "start": "vite demo",
-    "build": "npm run build:lib && npm run build:types",
+    "build": "npm run build:lib && npm run build:types && npm run build:es6",
     "build:lib": "vite -c vite.config.lib.js build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
+    "build:es6": "tsc",
     "build:demo": "vite build demo",
     "build:docs": "tsx utils/docs.ts",
     "prettier": "prettier --check \"./**/*..{ts,html,css,md}\"",

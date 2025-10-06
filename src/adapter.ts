@@ -33,7 +33,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
     private _container: HTMLElement;
     private _dynamicObjects: Record<string, mapgl.Polygon | mapgl.Polyline | mapgl.Marker>;
     private _style: Style;
-    private _drawingStyle: Style;
 
     private featureStyles: Record<string, Style>;
 
@@ -42,7 +41,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
             map: mapgl.Map;
             mapgl: typeof mapgl;
             style?: Style;
-            drawingStyle?: Style;
         } & TerraDrawExtend.BaseAdapterConfig,
     ) {
         super(config);
@@ -52,7 +50,6 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
         this._container = this._map.getContainer();
         this._dynamicObjects = {};
         this._style = { ...defaultStyle, ...config.style };
-        this._drawingStyle = { ...this._style, ...config.drawingStyle };
         this.featureStyles = {};
     }
 
@@ -144,10 +141,99 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
     }
 
     /**
-     * Updates the current drawing style settings
+     * Adds styling to geojson features properties:
+     *  - calculates unique icons and style layers for GeoJSON features.
+     *  - assigns style layer IDs to each feature's properties based on its geometry type and style.
+     * 
+     * @param features - GeoJSON featureset (should be got from `draw.getSnapshot()` call).
+     *
+     * @returns an object containing a mapping of icon names to their data URIs and an array of style layer definitions.
+     *
      */
-    public updateDrawingStyle(style: Partial<Style>) {
-        this._drawingStyle = { ...this._drawingStyle, ...style };
+    public addStyling(features: GeoJSONStoreFeatures[]): { icons: Record<string, string>, layers: any[] } {
+        const iconsHash: Record<string, string> = {};
+        let iconIndex = 0;
+        const iconsMap: Record<string, string> = {};
+        const styleLayersHash: Record<string, string> = {};
+        const styleLayersMap: Record<string, any> = {};
+        let styleLayerIndex = 0;
+
+
+        function getIconName(icon: string) {
+            let iconName = iconsHash[icon]
+            if (!iconName) {
+                iconName = `terra-draw-icon-${iconIndex}`;
+                iconsHash[icon] = iconName;
+                iconsMap[iconName] = icon;
+                iconIndex++;
+            }
+            return iconName;
+        }
+
+        function getStyleLayerId(style: Style, geometryType: 'Point' | 'LineString' | 'Polygon') {
+            let featureStyle: any;
+            switch (geometryType) {
+                case 'Point':
+                    const icon = dotIcon(
+                        style.outlineColor,
+                        style.fillColor,
+                        style.pointCap,
+                    );
+                    const iconName = getIconName(icon);
+                    featureStyle = {
+                        type: 'point',
+                        style: {
+                            iconImage: iconName,
+                            iconWidth: 16,
+                            iconLabelingGroup: '__overlapped'
+                        }
+                    };
+                    break;
+                case 'LineString':
+                    featureStyle = {
+                        type: 'line',
+                        style: {
+                            color: style.outlineColor,
+                            width: style.outlineWidth,
+                        }
+                    };
+                    break;
+                case 'Polygon':
+                    featureStyle = {
+                        type: 'polygon',
+                        style: {
+                            color: style.fillColor,
+                            strokeColor: style.outlineColor,
+                            strokeWidth: style.outlineWidth,
+                        }
+                    };
+                    break;
+                default:
+                    console.error(`Unsupported geometry type: ${geometryType}`);
+                    featureStyle = {};
+            }
+            const styleKey = JSON.stringify(featureStyle);
+            let styleLayerId = styleLayersHash[styleKey];
+            if (!styleLayerId) {
+                styleLayerId = `terra-draw-${styleLayerIndex}`;
+                styleLayersHash[styleKey] = styleLayerId;
+                featureStyle.id = styleLayerId;
+                featureStyle.filter = ['==', ['get', 'styleLayer'], styleLayerId];
+                styleLayersMap[styleLayerId] = featureStyle;
+                styleLayerIndex++;
+            }
+            return styleLayerId;
+        }
+
+        for (const f of features) {
+            if (f.id) {
+                const style = this.featureStyles[f.id];
+                const styleLayerId = getStyleLayerId(style, f.geometry.type);
+                f.properties.styleLayer = styleLayerId;
+            }
+        }
+
+        return { icons: iconsMap, layers: Object.keys(styleLayersMap).map(key => styleLayersMap[key]) };
     }
 
     private updateFeature(feature: GeoJSONStoreFeatures) {
@@ -169,10 +255,8 @@ export class TerraDrawMapGlAdapter extends TerraDrawExtend.TerraDrawBaseAdapter 
             this.featureStyles[stylingFeatureId] = { ...this._style };
         }
 
-        // Determine which style to use based on feature state
-        const isDrawing = feature.properties.mode !== undefined;
         const currentStyle =
-            this.featureStyles[stylingFeatureId] ?? (isDrawing ? this._drawingStyle : this._style);
+            this.featureStyles[stylingFeatureId] ?? this._style;
 
         switch (feature.geometry.type) {
             case 'Polygon': {
